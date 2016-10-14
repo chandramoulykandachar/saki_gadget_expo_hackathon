@@ -110,7 +110,7 @@ class Prediction(APIView):
             if serializer.is_valid():
                 try:
                     trained_object = pickle.load(
-                        open(request.query_params['user_name'] + '_' + serializer.validated_data['app_name'] + '.pickle', "rb"))
+                        open(request.query_params['user_name'] + '_' + serializer.validated_data['app_name'], "rb"))
                     print serializer.validated_data
                     x = trained_object.transition(serializer.validated_data['current_activity'],
                                                   serializer.validated_data['message'])
