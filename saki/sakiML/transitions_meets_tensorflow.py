@@ -29,7 +29,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 import pickle
 
 # IMPORTING FROM IMPORTS
-from GetInfo import GetInfo
+from GetInfo import GetInfo, Relavence
 
 
 # In[215]:
@@ -73,6 +73,7 @@ class ActivityClassifier():
                     new_list.append(tag)
             new_list.sort()
             self.whys[i] = new_list
+            self.r = Relavence(self.database['bucket'])
         pickle.dump(self, open(user_name + '_' + self.app_name + '.pickle', "wb"))
 
     def transition(self, current_activity, statement):
@@ -102,4 +103,4 @@ class ActivityClassifier():
             return_tuple.append((ret[0], g.get_info(i)))
             if self.database['transitions'].has_key(ret[0]):
                 current_activity = self.database['transitions'][ret[0]]
-        return return_tuple
+        return {"return_list":return_tuple,"confident":self.r.predict(statement)}

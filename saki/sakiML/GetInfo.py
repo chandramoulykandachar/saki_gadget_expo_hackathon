@@ -1,8 +1,36 @@
-
-
 # importing NLTK stuff
 from nltk.tag import pos_tag
 from nltk import word_tokenize
+
+import pickle
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.svm import LinearSVC
+
+
+class Relavence():
+    def __init__(self, buckets):
+        mn_list = []
+        Y = []
+        d = CountVectorizer()
+        for i in buckets:
+            for j in buckets[i]:
+                mn_list.append(buckets[i][j])
+                Y.append('yes')
+        list_of_nons = pickle.load(open("irrilavent", "rb"))
+        try:
+            list_of_nons = list_of_nons[:len(mn_list)]
+        except Exception as e:
+            pass
+        for i in list_of_nons:
+            mn_list.append(i)
+            Y.append('no')
+        self.s = LinearSVC()
+        h = d.fit_transform(mn_list)
+        self.s.fit(h, Y)
+        self.d = d
+
+    def predict(self, string):
+        return self.s.predict(self.d.transform([string]))
 
 
 class GetInfo():
@@ -26,7 +54,7 @@ class GetInfo():
         list_of_vals.append(temp_string)
         del temp_string
 
-        if list_of_vals[-1] == '' and len(list_of_vals) !=1:
+        if list_of_vals[-1] == '' and len(list_of_vals) != 1:
             return i[0]
         if len(list_of_vals) == 1:
             return None
