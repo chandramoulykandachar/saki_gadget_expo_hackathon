@@ -10,7 +10,7 @@ from django.db import models
 # Create your models here.
 
 class User(models.Model):
-    user = models.CharField(max_length=100)
+    user_name = models.CharField(max_length=100)
     api_key = models.CharField(max_length=100)
 
 

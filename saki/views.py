@@ -53,9 +53,9 @@ class Apps(APIView):
         :param format:
         :return:
         """
-        if request.query_params['api_key'] == User.objects.all().filter(user=request.query_params['user_name'])[
+        if request.query_params['api_key'] == User.objects.all().filter(user_name=request.query_params['user_name'])[
             0].api_key:
-            user = App.objects.all().filter(user=User.objects.all().filter(user=request.query_params['user_name'])[0])
+            user = App.objects.all().filter(user=User.objects.all().filter(user_name=request.query_params['user_name'])[0])
             serializer = AppSerializer(user, many=True)
             print serializer
             return Response(serializer.data)
@@ -70,9 +70,9 @@ class Apps(APIView):
         :param format:
         :return:
         """
-        if request.query_params['api_key'] == User.objects.all().filter(user=request.query_params['user_name'])[
+        if request.query_params['api_key'] == User.objects.all().filter(user_name=request.query_params['user_name'])[
             0].api_key:
-            serializer = AppSerializer(User.objects.all().filter(user=request.query_params['user_name'])[0],
+            serializer = AppSerializer(User.objects.all().filter(user_name=request.query_params['user_name'])[0],
                                        data=request.data)
             if serializer.is_valid():
                 serializer.save()
@@ -103,7 +103,7 @@ class Prediction(APIView):
         :param format:
         :return:
         """
-        if request.query_params['api_key'] == User.objects.all().filter(user=request.query_params['user_name'])[
+        if request.query_params['api_key'] == User.objects.all().filter(user_name=request.query_params['user_name'])[
             0].api_key:
 
             serializer = PredictionSerializer(data=request.data)
@@ -146,7 +146,7 @@ class Train(APIView):
         :param format:
         :return:
         """
-        if request.query_params['api_key'] == User.objects.all().filter(user=request.query_params['user_name'])[
+        if request.query_params['api_key'] == User.objects.all().filter(user_name=request.query_params['user_name'])[
             0].api_key:
             serializer = TrainSerializer(data=request.data)
             if serializer.is_valid():

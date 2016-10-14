@@ -6,7 +6,7 @@ from saki.models import User, App
 
 class UserSerializer(serializers.Serializer):
     pk = serializers.IntegerField(read_only=True)
-    user = serializers.CharField(required=True, allow_blank=True, max_length=100)
+    user_name = serializers.CharField(required=True, allow_blank=True, max_length=100)
     api_key = serializers.CharField(required=True, max_length=100)
 
     def create(self, validated_data):
