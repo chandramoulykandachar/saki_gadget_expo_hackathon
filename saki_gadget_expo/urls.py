@@ -1,4 +1,4 @@
-"""saki_gadget_expo URL Configuration
+"""phase2 URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/1.9/topics/http/urls/
@@ -15,7 +15,13 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from rest_framework.urlpatterns import format_suffix_patterns
+from saki import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^users/$', views.Users.as_view()),
+    url(r'^apps/$', views.Apps.as_view()),
+    url(r'^train/$', views.Train.as_view()),
+    url(r'^predict/$', views.Prediction.as_view()),
 ]
