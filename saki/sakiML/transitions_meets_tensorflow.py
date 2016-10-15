@@ -54,6 +54,7 @@ class ActivityClassifier():
         for i in self.database['activities']:
             X = []
             Y = []
+
             self.buckets_at_this_level = {i: [self.database['bucket'][i][j] for j in self.database['bucket'][i]] for i
                                           in
                                           self.database['activities'][i]['views'].keys()}
@@ -98,9 +99,10 @@ class ActivityClassifier():
             particles = ""
         return_tuple = []
         for i in parts:
+            print "here"
             ret = self.models[current_activity].predict(
                 self.transformers[current_activity].transform([i]))
-            return_tuple.append((ret[0], g.get_info(i)))
+            return_tuple.append(({"id":ret[0],"info":g.get_info(i),"split_string":i}))
             if self.database['transitions'].has_key(ret[0]):
                 current_activity = self.database['transitions'][ret[0]]
         return {"return_list":return_tuple,"confident":self.r.predict(statement)[0]}
