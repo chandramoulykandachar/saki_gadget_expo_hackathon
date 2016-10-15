@@ -22,7 +22,7 @@ from nltk.tokenize import PunktSentenceTokenizer
 # from sklearn.feature_extraction.text import TfidfVectorizer
 
 # SCIKIT-LEARN IMPORTS
-from sklearn.svm import SVC
+from sklearn.svm import LinearSVC
 from sklearn.feature_extraction.text import CountVectorizer
 
 # IMPORTING PICKLE
@@ -63,7 +63,7 @@ class ActivityClassifier():
                     Y.append(y)
             d = CountVectorizer()
             X = d.fit_transform(X)
-            graph = SVC(probability=True)
+            graph = LinearSVC()
             print graph.fit(X, Y)
             self.models[i] = graph
             self.transformers[i] = d
@@ -103,4 +103,4 @@ class ActivityClassifier():
             return_tuple.append((ret[0], g.get_info(i)))
             if self.database['transitions'].has_key(ret[0]):
                 current_activity = self.database['transitions'][ret[0]]
-        return {"return_list":return_tuple,"confident":self.r.predict(statement)}
+        return {"return_list":return_tuple,"confident":self.r.predict(statement)[0]}

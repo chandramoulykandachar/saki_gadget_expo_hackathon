@@ -114,10 +114,7 @@ class Prediction(APIView):
                     print serializer.validated_data
                     x = trained_object.transition(serializer.validated_data['current_activity'],
                                                   serializer.validated_data['message'])
-                    print "here"
-                    print x
                 except Exception as e:
-                    print e
                     return Response({"error": "The current model not trained"}, status=status.HTTP_204_NO_CONTENT)
                 return Response(x, status=status.HTTP_200_OK)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
